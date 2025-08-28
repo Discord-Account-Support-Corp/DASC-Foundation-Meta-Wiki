@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  mediawiki:
+    image: mediawiki:1.42
+    ports:
+      - "8080:80"
+    volumes:
+      - ./images:/var/www/html/images
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wikidb
+      MYSQL_USER: wikiuser
+      MYSQL_PASSWORD: wikisecret
+    volumes:
+      - ./db:/var/lib/mysql
